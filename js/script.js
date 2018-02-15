@@ -21,12 +21,20 @@ app.controller('botCtrl', function($scope,$interval) {
 				break
 		}
 		lastMove = usedMove
+		console.log($scope.position)
 	}
 	$scope.feedback = function(positive) {
-		if (positive) {
-			$scope.moves.push()
-		} else {
+		if (!lastMove) {
 			//
+		} else if (positive) {
+			$scope.moves.push(lastMove)
+		} else {
+			var moves = ['+x','+y','-x','-y']
+			moves = moves.filter(e => e!==lastMove)
+			moves.forEach(function(move){
+				$scope.moves.push(move)
+			})
 		}
+		$scope.move()
 	}
 })
